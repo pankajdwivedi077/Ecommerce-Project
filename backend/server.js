@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require('./routes/auth/auth-routes')
+// const { cloudinary } = require('./helpers/cloundinary')
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log("mongodb connected")
