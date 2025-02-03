@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
       withCredentials: true,
     }
   );
-  return response.data;
+  return response.data; 
 });
 
 export const logOutUser = createAsyncThunk("/auth/logout", async () => {
