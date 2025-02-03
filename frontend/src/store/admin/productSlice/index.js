@@ -25,22 +25,23 @@ export const fetchAllProducts = createAsyncThunk('/products/fetchAllProducts', a
     return result?.data;
 })
 
-export const edditProduct = createAsyncThunk('/products/editProduct', async (id) => {
+export const edditProduct = createAsyncThunk('/products/editProduct', async ({ id, formData }) => {
     const result = await axios.put(
         `http://localhost:5000/api/admin/products/edit/${id}`,
-
-    )
-    return result?.data;
-})
-
-export const deleteProduct = createAsyncThunk('/products/deleteProduct', async (id, formData) => {
-    const result = await axios.post(
-        `http://localhost:5000/api/admin/products/delete/${id}`,
         formData, {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
+
+    )
+    return result?.data;
+})
+
+export const deleteProduct = createAsyncThunk('/products/deleteProduct', async (id) => {
+    const result = await axios.delete(
+        `http://localhost:5000/api/admin/products/delete/${id}`,
+
     )
     return result?.data;
 })
@@ -63,7 +64,9 @@ const adminProductsSlice = createSlice({
             state.isLoading = false;
             state.productList = [];
          })
-         
+         .addCase(deleteProduct.fulfilled, (state, action) => {
+            state.productList = state.productList.filter(product => product._id !== action.meta.arg);
+        })
     }
 })
 

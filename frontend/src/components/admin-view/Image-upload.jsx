@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
 
-function ProductImageUpload({ uploadImageUrl, setUploadImageUrl, imageFile, setImageFile, imageLoadingState, setImageLoadingState }){
+function ProductImageUpload({ uploadImageUrl, setUploadImageUrl, imageFile, setImageFile, imageLoadingState, setImageLoadingState, isEditMode }){
 
    const inputRef = useRef(null)
 
@@ -55,13 +55,13 @@ function ProductImageUpload({ uploadImageUrl, setUploadImageUrl, imageFile, setI
   return (
     <div className="w-full max-w-md mx-auto mt-4">
         <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
-        <div onDragOver={handleDragOver} onDrop={hanldeDrop} className="border-2 border-dashed rounded-lg p-4">
+        <div onDragOver={handleDragOver} onDrop={hanldeDrop} className={` ${isEditMode ? 'opacity-60' : ''} border-2 border-dashed rounded-lg p-4`}>
             <Input id="image-upload" type="file" 
             className="hidden"
-             ref={inputRef} onChange={handleImageFileChange} />
+             ref={inputRef} onChange={handleImageFileChange} disabled={isEditMode} />
              {
                 !imageFile ? (
-                <Label htmlFor="image-upload" className="flex flex-col items-center justify-center h-32 cursor-pointer">
+                <Label htmlFor="image-upload" className={` ${isEditMode ? 'cursor-not-allowed' : ''} flex flex-col items-center justify-center h-32 cursor-pointer`}>
                     <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
                     <span>Drag & drop or click to upload image</span>
                 </Label> 
