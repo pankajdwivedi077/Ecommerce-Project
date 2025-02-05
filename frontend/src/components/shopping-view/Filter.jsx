@@ -5,7 +5,7 @@ import { Checkbox } from "../ui/checkbox"
 import { Separator } from "../ui/separator"
 
 
-function ProductFilter() {
+function ProductFilter({ handleFilter, filters }) {
   return (
     <div className="bg-background rounded-lg shadow-sm">
         <div className="p-4 border-b">
@@ -20,13 +20,11 @@ function ProductFilter() {
                 {filterOptions[keyItem].map((option) => (
                   <Label className="flex font-medium items-center gap-2 ">
                     <Checkbox
-                      // checked={
-                      //   filters &&
-                      //   Object.keys(filters).length > 0 &&
-                      //   filters[keyItem] &&
-                      //   filters[keyItem].indexOf(option.id) > -1
-                      // }
-                      // onCheckedChange={() => handleFilter(keyItem, option.id)}
+                    checked={
+                      filters && Object.keys(filters).length > 0 &&
+                      filters[keyItem] && filters[keyItem].indexOf(option.id) > -1
+                    }
+                     onCheckedChange={() => handleFilter(keyItem, option.id)}
                     />
                     {option.label}
                   </Label>
