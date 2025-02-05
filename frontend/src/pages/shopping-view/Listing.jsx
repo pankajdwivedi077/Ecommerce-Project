@@ -1,9 +1,10 @@
 import ProductFilter from "@/components/shopping-view/Filter";
 import ShoppingProductTile from "@/components/shopping-view/Product-Tile";
+import ProductDetailsDialog from "@/components/shopping-view/ProductDetails";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilterdProducts } from "@/store/shop/productSlice";
+import { fetchAllFilterdProducts, fetchProductDetail } from "@/store/shop/productSlice";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ArrowUpDown } from 'lucide-react';
 import { useEffect, useState } from "react";
@@ -24,11 +25,13 @@ function createSearchParamsHelper(filterParams){
 function ShoppingListing(){
 
     const dispatch = useDispatch()
-    const { productsList } = useSelector((state) => state.shopProduct)
+    const { productsList, productDetails } = useSelector((state) => state.shopProduct)
 
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const [openDetailsDialog, setOpenDetailsDialog] = useState(false)
 
     function handleSort(value){
          setSort(value)
@@ -56,6 +59,10 @@ function ShoppingListing(){
         sessionStorage.setItem('filters', JSON.stringify(copyFilters));
     }
 
+    function handleGetProductDetails(getCurrentProductId){
+        dispatch(fetchProductDetail(getCurrentProductId))
+    }
+
     useEffect(() => {
        setSort("price-lowtohigh")
        setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
@@ -74,7 +81,11 @@ function ShoppingListing(){
        dispatch(fetchAllFilterdProducts({filterParams: filters, sortParams: sort}))
     }, [dispatch, sort, filters])
 
-    console.log(filters, searchParams.toString(), "fil")
+    useEffect(() => {
+      if (productDetails !== null) setOpenDetailsDialog(true)
+    }, [productDetails])
+
+    console.log(productDetails, "pr")
 
     return <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 p-4 md:p-6" >
         <ProductFilter handleFilter={handleFilter} filters={filters}/>
@@ -103,11 +114,12 @@ function ShoppingListing(){
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {
                     productsList && productsList.length > 0 ?
-                    productsList.map((productItem) => <ShoppingProductTile key={productItem._id} product={productItem} /> ) : null
+                    productsList.map((productItem) => <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} key={productItem._id} product={productItem} /> ) : null
                 }
                 
              </div>
         </div>
+        <ProductDetailsDialog open={openDetailsDialog} setOpen={setOpenDetailsDialog} productDetails={productDetails} />
     </div>
 }
 
