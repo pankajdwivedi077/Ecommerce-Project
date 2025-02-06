@@ -4,6 +4,8 @@ import ProductDetailsDialog from "@/components/shopping-view/ProductDetails";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { useToast } from "@/hooks/use-toast";
+import { addToCart, fetchCartItems } from "@/store/shop/cartSlice";
 import { fetchAllFilterdProducts, fetchProductDetail } from "@/store/shop/productSlice";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ArrowUpDown } from 'lucide-react';
@@ -26,12 +28,16 @@ function ShoppingListing(){
 
     const dispatch = useDispatch()
     const { productsList, productDetails } = useSelector((state) => state.shopProduct)
+    const {  user, isAuthenticated } = useSelector((state) => state.auth)
 
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState(null)
+    
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [openDetailsDialog, setOpenDetailsDialog] = useState(false)
+
+    const { toast } = useToast()
 
     function handleSort(value){
          setSort(value)
@@ -63,6 +69,22 @@ function ShoppingListing(){
         dispatch(fetchProductDetail(getCurrentProductId))
     }
 
+    function handleAddtoCart(getCurrentProductId){
+        if (!user || !user.id) {
+            console.error("User ID is missing");
+            return;
+          }
+       dispatch(addToCart({ userId: user?.id, productId: getCurrentProductId, quantity: 1 })).then((data) => {
+             console.log(data)
+        if (data?.payload?.success) {
+            dispatch(fetchCartItems({ userId: user?.id }));
+            toast({
+                title: "Product is added to cart"
+            })
+        }
+       })
+    }
+
     useEffect(() => {
        setSort("price-lowtohigh")
        setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
@@ -85,7 +107,8 @@ function ShoppingListing(){
       if (productDetails !== null) setOpenDetailsDialog(true)
     }, [productDetails])
 
-    console.log(productDetails, "pr")
+    // console.log(cartItems, "pr")
+    // console.log(user.id)
 
     return <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 p-4 md:p-6" >
         <ProductFilter handleFilter={handleFilter} filters={filters}/>
@@ -114,7 +137,7 @@ function ShoppingListing(){
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {
                     productsList && productsList.length > 0 ?
-                    productsList.map((productItem) => <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} key={productItem._id} product={productItem} /> ) : null
+                    productsList.map((productItem) => <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} key={productItem._id} product={productItem} handleAddtoCart={handleAddtoCart} /> ) : null
                 }
                 
              </div>

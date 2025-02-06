@@ -23,11 +23,19 @@ export const addToCart = createAsyncThunk(
 
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
-  async ({ userId }) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/shop/cart/get/${userId}`,
-    );
-    return response.data;
+  async ({ userId }, { rejectWithValue }) => {
+    console.log(userId)
+    if(!userId) {
+      return rejectWithValue("User id required")
+    }
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/shop/cart/get/${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Error fetching cart.");
+    }
   }
 );
 
@@ -73,6 +81,39 @@ const shoppingCartSlice = createSlice({
         state.isLoading = false
         state.cartItems = []
      })
+     .addCase(fetchCartItems.pending, (state) => {
+      state.isLoading = true
+   })
+   .addCase(fetchCartItems.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.cartItems = action.payload.data
+   })
+   .addCase(fetchCartItems.rejected, (state) => {
+      state.isLoading = false
+      state.cartItems = []
+   })
+   .addCase(updateCartItem.pending, (state) => {
+    state.isLoading = true
+ })
+ .addCase(updateCartItem.fulfilled, (state, action) => {
+    state.isLoading = false
+    state.cartItems = action.payload.data
+ })
+ .addCase(updateCartItem.rejected, (state) => {
+    state.isLoading = false
+    state.cartItems = []
+ })
+ .addCase(deleteCartItem.pending, (state) => {
+  state.isLoading = true
+})
+.addCase(deleteCartItem.fulfilled, (state, action) => {
+  state.isLoading = false
+  state.cartItems = action.payload.data
+})
+.addCase(deleteCartItem.rejected, (state) => {
+  state.isLoading = false
+  state.cartItems = []
+})
   },
 });
 

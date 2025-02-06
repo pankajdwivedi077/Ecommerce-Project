@@ -56,12 +56,9 @@ const fetchCartItems = async (req, res) => {
 
       const { userId } = req.params;
 
-      if (!userId){
-        return res.status(400).json({
-            success: false,
-            message: "Userid is manadatory"
-        })
-      }
+      if (!userId || userId === "undefined") {
+        return res.status(400).json({ success: false, message: "User ID is required" });
+    }
 
       const cart = await Cart.findOne({userId}).populate({
         path: 'items.productId',
