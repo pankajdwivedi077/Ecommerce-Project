@@ -7,6 +7,7 @@ const authRouter = require('./routes/auth/auth-routes')
 const adminProductRouter = require('./routes/admin/product-route');
 const shopProductsRouter = require('./routes/shop/product-route')
 const shopCartRouer = require('./routes/shop/cart-route');
+const addressRouter = require('./routes/shop/address-route')
 // const { cloudinary } = require('./helpers/cloundinary')
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
@@ -37,6 +38,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/admin/products', adminProductRouter)
 app.use('/api/shop/products', shopProductsRouter)
 app.use('/api/shop/cart', shopCartRouer)
+app.use('/api/shop/address', addressRouter)
 
 app.listen(PORT, ()=> {
     console.log(`Server is running on port ${PORT}`)

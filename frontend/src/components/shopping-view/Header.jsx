@@ -53,7 +53,7 @@ function HeaderRightContent(){
         dispatch(fetchCartItems( { userId: user?.id }))
     }, [dispatch])
 
-    console.log(cartItems.items, "p")
+    // console.log(cartItems.items, "p")
 
     return <div className="flex lg:items-center lg:flex-row flex-col gap-4" >
         <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
