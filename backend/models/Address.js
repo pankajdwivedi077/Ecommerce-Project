@@ -19,6 +19,9 @@ const addressSchema = new mongoose.Schema({
    pincode: {
      type: String,
    },
+   notes: {
+     type: String,
+   },
 }, {timestamps: true})
 
 const Address = mongoose.model("Address", addressSchema)

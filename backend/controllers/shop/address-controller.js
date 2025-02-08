@@ -95,7 +95,7 @@ const editAddress = async(req, res) => {
     }
 
     res.status(200).json({
-            success: false,
+            success: true,
             data: address
     })
 
@@ -134,7 +134,7 @@ const deleteAddress = async(req, res) => {
     }
 
     res.status(200).json({
-            success: false,
+            success: true,
             message: "Address deleted successfully"
     })
 
