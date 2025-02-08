@@ -1,7 +1,9 @@
+import AdminOrdersList from "../../components/admin-view/Orders"
+
 function AdminOrders(){
-    return (
-        <div>Admin Orders</div>
-    )
+    return <div>
+      <AdminOrdersList />
+    </div>
 }
 
 export default AdminOrders;

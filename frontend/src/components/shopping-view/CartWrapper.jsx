@@ -4,6 +4,7 @@ import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import UserCartItemsContent from "./CartItemsContent";
 
 function UserCartWrapper({ cartItems, setOpenCartSheet }) {
+  
   const totalCartAmount =
     cartItems && cartItems.length > 0
       ? cartItems.reduce(
