@@ -51,7 +51,7 @@ function HeaderRightContent(){
 
     useEffect(() => {
         dispatch(fetchCartItems( { userId: user?.id }))
-    }, [dispatch])
+    }, [dispatch, user?.id])
 
     // console.log(cartItems.items, "p")
 

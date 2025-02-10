@@ -16,9 +16,9 @@ const addressSchema = new mongoose.Schema({
    phone: {
      type: String,
    },
-   pincode: {
-     type: String,
-   },
+  //  pincode: {
+  //    type: String,
+  //  },
    notes: {
      type: String,
    },
