@@ -1,5 +1,6 @@
 const Order = require("../../models/Order"); // Import Order model
 const Cart = require("../../models/Cart"); // Import Cart model
+const Product = require("../../models/Product")
 
 const { paypalClient } = require("../../helpers/paypal");
 const paypal = require("@paypal/checkout-server-sdk");
@@ -95,6 +96,21 @@ const capturePayment = async (req, res) => {
     order.paymentStatus = 'paid';
     order.orderStatus = 'confirmed';
     order.payerId = payerId;
+
+    for(let item of order.cartItems){
+      let product = await Product.findById(item.productId)
+
+      if (!product){
+        return res.status(400).json({
+          success: false,
+          message: `Not enough stock for this product ${product.title} `
+        })
+      }
+      
+        product.totalStock -= item.quantity
+        await product.save()
+      
+    }
 
     const getCartId = order.cartId;
      await Cart.findByIdAndDelete(getCartId)

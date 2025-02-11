@@ -29,6 +29,7 @@ function ShoppingListing(){
     const dispatch = useDispatch()
     const { productsList, productDetails } = useSelector((state) => state.shopProduct)
     const {  user, isAuthenticated } = useSelector((state) => state.auth)
+    const { cartItems } = useSelector((state) => state.shopCart)
 
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState(null)
@@ -71,7 +72,25 @@ function ShoppingListing(){
         dispatch(fetchProductDetail(getCurrentProductId))
     }
 
-    function handleAddtoCart(getCurrentProductId){
+    function handleAddtoCart(getCurrentProductId, getTotalStock){
+        console.log(cartItems, "ct")
+
+        let getCartItems = cartItems?.items || []
+
+        if (getCartItems.length){
+          const indexOfCurrentItem = getCartItems.findIndex(item => item.productId === getCurrentProductId );
+          if(indexOfCurrentItem > -1){
+            const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+            if (getQuantity + 1 > getTotalStock){
+                toast({
+                    title: `Only ${getQuantity} quantity can be addred for this item`,
+                    variant: 'destructive'
+                })
+                return;
+            }
+          }
+        }
+
         if (!user || !user.id) {
             console.error("User ID is missing");
             return;
@@ -109,8 +128,7 @@ function ShoppingListing(){
       if (productDetails !== null) setOpenDetailsDialog(true)
     }, [productDetails])
 
-    // console.log(cartItems, "pr")
-    // console.log(user.id)
+    console.log(productsList, "pd")
 
     return <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 p-4 md:p-6" >
         <ProductFilter handleFilter={handleFilter} filters={filters}/>

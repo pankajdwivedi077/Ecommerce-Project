@@ -10,6 +10,8 @@ function UserCartItemsContent({ cartItem }){
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { toast } = useToast()
+    const { cartItems } = useSelector((state) => state.shopCart)
+    const { productsList } = useSelector((state) => state.shopProduct)
 
     function handleCartItemDelete(getCartItem){
       dispatch(deleteCartItem({ userId: user?.id , productId: getCartItem?.productId })).then((data) => {
@@ -22,6 +24,28 @@ function UserCartItemsContent({ cartItem }){
     }
 
     function handleUpadteQuantity(getCartItem, typeOfAction){
+
+       if(typeOfAction === 'plus'){
+        let getCartItems = cartItems?.items || []
+
+        if (getCartItems.length){
+          const indexOfCurrentCartItem = getCartItems.findIndex(item => item.productId === getCartItem?.productId );
+          const getCurrentProductIndex = productsList.findIndex(product => product._id === getCartItem?.productId )
+          const getTotalStock = productsList[getCurrentProductIndex].totalStock
+          if(indexOfCurrentCartItem > -1){
+            const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+            if (getQuantity + 1 > getTotalStock){
+                toast({
+                    title: `Only ${getQuantity} quantity can be addred for this item`,
+                    variant: 'destructive'
+                })
+                return;
+            }
+          }
+        }    
+    
+       }
+
        dispatch(updateCartItem({ userId: user?.id, productId: getCartItem?.productId, quantity:
         typeOfAction === 'plus' ?
         getCartItem?.quantity + 1 : getCartItem?.quantity -1 })).then((data) => {
