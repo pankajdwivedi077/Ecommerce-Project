@@ -39,6 +39,8 @@ function ShoppingListing(){
 
     const { toast } = useToast()
 
+    const categorySearchParams = searchParams.get('category')
+
     function handleSort(value){
          setSort(value)
     }
@@ -88,7 +90,7 @@ function ShoppingListing(){
     useEffect(() => {
        setSort("price-lowtohigh")
        setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
-    }, [])
+    }, [categorySearchParams])
     
     useEffect(() => {
        if(filters && Object.keys(filters).length > 0 ){

@@ -39,8 +39,10 @@ function ShoppingOrderDetailsView({ orderDetails }){
                         className={`py-1 px-3 ${
                             orderDetails?.orderStatus === "confirmed"
                             ? "bg-green-500"
+                            : orderDetails?.orderStatus === "delivered"
+                            ? "bg-green-500"
                             : "bg-red-500"
-                        } `}
+                        }`}
                       >
                         {orderDetails?.orderStatus}
                       </Badge>

@@ -5,6 +5,7 @@ import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllOrderForAdmin, getOrderDetailsForAdmin, updateOrderStatus } from "@/store/admin/orderSlice";
 
 const initialFormData = {
   status: "",
@@ -13,11 +14,23 @@ const initialFormData = {
 function AdminOrdersListView({ orderDetails }){
 
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
   const [formData, setFormData] = useState(initialFormData)
+  
 
   function handleUpdateStatus(e){
     e.preventDefault()
+  
+    const { status } = formData;
+    dispatch(updateOrderStatus({ id: orderDetails?._id , orderStatus: status })).then((data) => {
+      
+        if(data?.payload?.success){
+            dispatch(getOrderDetailsForAdmin(orderDetails?._id))
+            dispatch(getAllOrderForAdmin())
+            setFormData(initialFormData)
+        }
+    })
   }
 
   return (
@@ -48,14 +61,16 @@ function AdminOrdersListView({ orderDetails }){
                 <p className="font-medium">Order Status</p>
                 <Label>
                 <Badge
-                        className={`py-1 px-3 ${
-                            orderDetails?.orderStatus === "confirmed"
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                        } `}
-                      >
-                        {orderDetails?.orderStatus}
-                      </Badge>
+                    className={`py-1 px-3 ${
+                        orderDetails?.orderStatus === "confirmed"
+                        ? "bg-green-500"
+                        : orderDetails?.orderStatus === "delivered"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                    }`}
+                    >
+                    {orderDetails?.orderStatus}
+                    </Badge>
                 </Label>
             </div>
         </div>
