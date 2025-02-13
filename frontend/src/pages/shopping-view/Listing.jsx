@@ -125,10 +125,17 @@ function ShoppingListing(){
     }, [dispatch, sort, filters])
 
     useEffect(() => {
-      if (productDetails !== null) setOpenDetailsDialog(true)
-    }, [productDetails])
+        if (productDetails) {
+          setOpenDetailsDialog(true);
+        }
+      }, [productDetails]);
 
-    console.log(productsList, "pd")
+    // useEffect(() => {
+    //   if (productDetails !== null) setOpenDetailsDialog(true)
+    // }, [productDetails])
+
+    // console.log("Product Details:", JSON.stringify(productDetails, null, 2));
+    // console.log(productsList, "pl")
 
     return <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 p-4 md:p-6" >
         <ProductFilter handleFilter={handleFilter} filters={filters}/>
