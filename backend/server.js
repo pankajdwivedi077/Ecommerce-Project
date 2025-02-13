@@ -12,6 +12,7 @@ const shopOrderRouter = require('./routes/shop/order-route')
 const adminOrderRouter = require('./routes/admin/order-route')
 const shopSearchRouter = require('./routes/shop/search-route')
 const productReviewRouter = require('./routes/shop/review-route')
+const featureRouter = require('./routes/common/feature-routes')
 // const { cloudinary } = require('./helpers/cloundinary')
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
@@ -47,6 +48,7 @@ app.use('/api/shop/address', addressRouter)
 app.use('/api/shop/order', shopOrderRouter)
 app.use('/api/shop/search', shopSearchRouter)
 app.use('/api/shop/review', productReviewRouter)
+app.use('/api/shop/feature', featureRouter)
 
 
 app.listen(PORT, ()=> {
