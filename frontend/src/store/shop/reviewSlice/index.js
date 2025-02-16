@@ -8,19 +8,19 @@ const initialState = {
 
 export const addReview = createAsyncThunk('/review/addReview', async (formData) => {
     const response = await axios.post(
-        `http://localhost:5000/api/shop/review/add`, 
+        `${import.meta.env.VITE_API_URL}/api/shop/review/add`, 
         formData, 
         
         // { headers: { "Content-Type": "application/json" } } // Ensure JSON format
         
     );
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
 });
 
 
 export const getAllReviews = createAsyncThunk('/review/getAllReviews', async (id)=> {
-    const response = await axios.get(`http://localhost:5000/api/shop/review/${id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/shop/review/${id}`);
   
     return response.data;
   })
@@ -37,7 +37,7 @@ const reviewSlice = createSlice({
         })
         .addCase(addReview.fulfilled, (state, action) => {
             state.isLoading = false;
-            console.log("Fetched Reviews:", action.payload);
+            // console.log("Fetched Reviews:", action.payload);
             if (action.payload.success) {
                 state.reviews.push(action.payload.data);
             }
@@ -51,7 +51,7 @@ const reviewSlice = createSlice({
          })
          .addCase(getAllReviews.fulfilled, (state, action) => {
             state.isLoading = false;
-            console.log("Fetched ReviewsAll:", action.payload);
+            // console.log("Fetched ReviewsAll:", action.payload);
             state.reviews = action.payload.data;
          })
          .addCase(getAllReviews.rejected, (state) => {

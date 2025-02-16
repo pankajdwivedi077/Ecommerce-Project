@@ -48,7 +48,7 @@ function ShoppingListing(){
     }
 
     function handleFilter(getSelectionId, getCurrentOptions){
-        console.log(getSelectionId, getCurrentOptions)
+        // console.log(getSelectionId, getCurrentOptions)
 
         let copyFilters = { ...filters };
         const indexOfCurrentSection = Object.keys(copyFilters).indexOf(getSelectionId);
@@ -94,7 +94,7 @@ function ShoppingListing(){
             return;
         }
 
-        console.log(cartItems, "ct")
+        // console.log(cartItems, "ct")
 
         let getCartItems = cartItems?.items || []
 
@@ -117,7 +117,7 @@ function ShoppingListing(){
             return;
           }
        dispatch(addToCart({ userId: user?.id, productId: getCurrentProductId, quantity: 1 })).then((data) => {
-             console.log(data)
+            //  console.log(data)
         if (data?.payload?.success) {
             dispatch(fetchCartItems({ userId: user?.id }));
             toast({

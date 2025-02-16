@@ -134,7 +134,7 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log("useruser");
+  // console.log("useruser");
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">

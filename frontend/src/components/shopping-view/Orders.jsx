@@ -36,7 +36,7 @@ function ShoppingOrders() {
     }
   }, [orderDetails]);
 
-  console.log(orderDetails, "det");
+  // console.log(orderDetails, "det");
 
   return (
     <Card>

@@ -84,7 +84,7 @@ function ShoppingCheckout() {
 
     
      dispatch(createNewOrder(orderData)).then((data) => {
-      console.log("Redux Thunk Response:", data);
+      // console.log("Redux Thunk Response:", data);
       if(data?.payload?.success){
         setIsPaymentStart(true)
       }else{
@@ -98,8 +98,8 @@ function ShoppingCheckout() {
     window.location.href = approvalURL;
   }
 
-  console.log(cartItems, "cartItems");
-  console.log(currentSelectAddress, "currentSelectAddres")
+  // console.log(cartItems, "cartItems");
+  // console.log(currentSelectAddress, "currentSelectAddres")
 
 
   return (

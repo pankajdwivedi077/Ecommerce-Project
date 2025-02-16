@@ -42,8 +42,8 @@ function AdminProducts(){
           id: currentEditedId ,
           formData
         })).then((data) => {
-          console.log(data, "edit")
-          console.log("Editing product with ID:", currentEditedId);
+          // console.log(data, "edit")
+          // console.log("Editing product with ID:", currentEditedId);
           if(data?.payload?.success) {
             dispatch(fetchAllProducts())
             setFormData(initialFormData)
@@ -56,7 +56,7 @@ function AdminProducts(){
         ...formData,
         image: uploadImageUrl
       })).then((data) => {
-        console.log(data)
+        // console.log(data)
         if (data?.payload?.success){
           dispatch(fetchAllProducts())
           setOpenCreateProductsDialog(false)
@@ -70,9 +70,9 @@ function AdminProducts(){
     }
 
     function handleDelete(getCurrentProductId){
-      console.log(getCurrentProductId)
+      // console.log(getCurrentProductId)
       dispatch(deleteProduct(getCurrentProductId)).then((data) => {
-        console.log("Delete API Response:", data);
+        // console.log("Delete API Response:", data);
         if(data?.payload?.success) {
           dispatch(fetchAllProducts())
         }
@@ -89,7 +89,7 @@ function AdminProducts(){
       dispatch(fetchAllProducts())
     }, [dispatch])
 
-    console.log(formData)
+    // console.log(formData)
 
     return <Fragment>
         <div className="mb-5 w-full flex justify-end">

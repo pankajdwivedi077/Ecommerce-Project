@@ -60,7 +60,7 @@ function Address({ setCurrentSelectedAddress, selectId }) {
         userId: user?.id,
       })
     ).then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.payload?.success) {
         dispatch(fetchAllAddress(user?.id));
         setFormData(initialAddressFormData);
@@ -79,7 +79,7 @@ function Address({ setCurrentSelectedAddress, selectId }) {
   }
 
   function handleDeleteAddress(getCurrentAddress) {
-    console.log(getCurrentAddress);
+    // console.log(getCurrentAddress);
     dispatch(
       deleteAddress({ userId: user?.id, addressId: getCurrentAddress?._id })
     ).then((data) => {
@@ -108,7 +108,7 @@ function Address({ setCurrentSelectedAddress, selectId }) {
     dispatch(fetchAllAddress(user?.id));
   }, [dispatch]);
 
-  console.log(addressList, "addressList");
+  // console.log(addressList, "addressList");
 
   return (
     <Card>

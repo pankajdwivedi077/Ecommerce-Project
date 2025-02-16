@@ -52,7 +52,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         quantity: 1,
       })
     ).then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data?.payload?.success) {
         dispatch(fetchCartItems({ userId: user?.id }));
         toast({
@@ -92,7 +92,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         reviewMessage: reviewMsg, 
         reviewValue: rating
     })).then((data) => {
-        console.log("Review API Response:", data);
+        // console.log("Review API Response:", data);
         if (data?.payload?.success) {
             setRating(0)
             setReviewMsg('')

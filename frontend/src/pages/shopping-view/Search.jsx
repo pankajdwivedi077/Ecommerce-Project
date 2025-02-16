@@ -40,7 +40,7 @@ function SearchProducts() {
            }
 
       function handleAddtoCart(getCurrentProductId, getTotalStock){
-          console.log(cartItems, "ct")
+          // console.log(cartItems, "ct")
   
           let getCartItems = cartItems?.items || []
   
@@ -63,7 +63,7 @@ function SearchProducts() {
               return;
             }
          dispatch(addToCart({ userId: user?.id, productId: getCurrentProductId, quantity: 1 })).then((data) => {
-               console.log(data)
+              //  console.log(data)
           if (data?.payload?.success) {
               dispatch(fetchCartItems({ userId: user?.id }));
               toast({
@@ -77,7 +77,7 @@ function SearchProducts() {
         if (productDetails !== null) setOpenDetailsDialog(true)
       }, [productDetails])
 
-  console.log(searchResults, "sr");
+  // console.log(searchResults, "sr");
 
   return (
     <div className="container mx-auto md:px-6 px-4 py-8">

@@ -65,7 +65,7 @@ function ShoppingHome(){
                     return;
                   }
                dispatch(addToCart({ userId: user?.id, productId: getCurrentProductId, quantity: 1 })).then((data) => {
-                     console.log(data)
+                    //  console.log(data)
                 if (data?.payload?.success) {
                     dispatch(fetchCartItems({ userId: user?.id }));
                     toast({
@@ -90,7 +90,7 @@ function ShoppingHome(){
         if (productDetails !== null) setOpenDetailsDialog(true)
       }, [productDetails])
 
-    console.log(productsList, "ra")
+    // console.log(productsList, "ra")
 
     return <div className="flex flex-col min-h-screen">
             <div className="relative w-full h-[600px] overflow-hidden">
