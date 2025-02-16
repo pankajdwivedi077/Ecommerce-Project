@@ -63,7 +63,7 @@ export const addProductFormElements = [
         { id: "men", label: "Men" },
         { id: "women", label: "Women" },
         { id: "kids", label: "Kids" },
-        { id: "accessories", label: "Accessories" },
+        { id: "cosplay", label: "cosplay" },
         { id: "footwear", label: "Footwear" },
       ],
     },
@@ -135,8 +135,8 @@ export const addProductFormElements = [
       path: '/shop/listing'
     },
     {
-      id: 'accessories',
-      label:'Accessories',
+      id: 'cosplay',
+      label:'cosplay',
       path: '/shop/listing'
     },
     {
@@ -151,7 +151,7 @@ export const addProductFormElements = [
     men: "Men",
     women: "Women",
     kids: "Kids",
-    accessories: "Accessories",
+    cosplay: "cosplay",
     footwear: "Footwear",
   };
   
@@ -169,7 +169,7 @@ export const addProductFormElements = [
       { id: "men", label: "Men" },
       { id: "women", label: "Women" },
       { id: "kids", label: "Kids" },
-      { id: "accessories", label: "Accessories" },
+      { id: "cosplay", label: "cosplay" },
       { id: "footwear", label: "Footwear" },
     ],
     brand: [

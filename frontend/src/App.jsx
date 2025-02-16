@@ -44,8 +44,9 @@ function App() {
       {/* <h1>Header component</h1> */}
       <Routes>
         <Route path='/' element={
-          <CheckAuth isAuthenticated={isAuthenticated} user={user} >
-          </CheckAuth>
+          // <CheckAuth isAuthenticated={isAuthenticated} user={user} >
+          // </CheckAuth>
+          <ShoppingListing />
         } />
         <Route path='/auth' element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user} >

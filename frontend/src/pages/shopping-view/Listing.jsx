@@ -11,7 +11,7 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ArrowUpDown } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 function createSearchParamsHelper(filterParams){
   const queryParams = [];
@@ -30,6 +30,7 @@ function ShoppingListing(){
     const { productsList, productDetails } = useSelector((state) => state.shopProduct)
     const {  user, isAuthenticated } = useSelector((state) => state.auth)
     const { cartItems } = useSelector((state) => state.shopCart)
+    const navigate = useNavigate(); 
 
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState(null)
@@ -69,10 +70,30 @@ function ShoppingListing(){
     }
 
     function handleGetProductDetails(getCurrentProductId){
+
+        if (!isAuthenticated) {
+            toast({
+                title: "Please login first to add items to the cart.",
+                variant: "destructive",
+            });
+            navigate("/auth/login"); // Redirect to login page
+            return;
+        }
+
         dispatch(fetchProductDetail(getCurrentProductId))
     }
 
     function handleAddtoCart(getCurrentProductId, getTotalStock){
+
+        if (!isAuthenticated) {
+            toast({
+                title: "Please login first to add items to the cart.",
+                variant: "destructive",
+            });
+            navigate("/auth/login"); // Redirect to login page
+            return;
+        }
+
         console.log(cartItems, "ct")
 
         let getCartItems = cartItems?.items || []
@@ -161,6 +182,16 @@ function ShoppingListing(){
                 </DropdownMenu>
                 </div>
             </div>
+
+                  {/* Login/Register Button */}
+      {!isAuthenticated && (
+        <div className="p-4 flex justify-end">
+          <Button asChild>
+            <a href="/auth/login">Login / Register</a>
+          </Button>
+        </div>
+      )}
+
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {
                     productsList && productsList.length > 0 ?
