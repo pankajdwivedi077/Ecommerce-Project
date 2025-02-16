@@ -19,7 +19,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { logOutUser } from "@/store/authSlice";
+import { logOutUser, resetTokenAndCredentials } from "@/store/authSlice";
 import UserCartWrapper from "./CartWrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cartSlice";
@@ -74,7 +74,10 @@ function HeaderRightContent() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    dispatch(logOutUser());
+    // dispatch(logOutUser());
+    dispatch(resetTokenAndCredentials())
+    sessionStorage.clear()
+    navigate('/')
   }
 
   useEffect(() => {
