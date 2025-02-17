@@ -11,7 +11,7 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ArrowUpDown } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 
 function createSearchParamsHelper(filterParams){
   const queryParams = [];
@@ -187,7 +187,7 @@ function ShoppingListing(){
       {!isAuthenticated && (
         <div className="p-4 flex justify-end">
           <Button asChild>
-            <a href="/auth/login">Login / Register</a>
+            <Link to="/auth/login">Login / Register</Link>
           </Button>
         </div>
       )}
